@@ -1,7 +1,6 @@
 from operator import index
 import streamlit as st
-import plotly.express as px
-import pandas_profiling
+
 from pycaret.regression import setup, compare_models, pull, save_model, load_model
 import pandas as pd
 from streamlit_pandas_profiling import st_profile_report
@@ -22,7 +21,7 @@ if os.path.exists('./dataset.csv'):
 with st.sidebar:
     st.image("https://impacts.cloud/assets/img/logo/logo.png")
     st.title("CRIS_AutoML")
-    choice = st.radio("Navigation", ["Upload","Detail in each machine","Profiling","Modelling", "Time Series Forecasting"])
+    choice = st.radio("Navigation", ["Upload","Detail in each machine","Modelling", "Time Series Forecasting"])
     st.info("This project application helps you build and explore your data.")
 
 if choice == "Upload":
@@ -32,11 +31,6 @@ if choice == "Upload":
         df = pd.read_csv(file, index_col=None)
         df.to_csv('dataset.csv', index=None)
         st.dataframe(df)
-
-if choice == "Profiling":
-    st.title("Exploratory Data Analysis")
-    profile_df = df.profile_report()
-    st_profile_report(profile_df)
 
 if choice == "Modelling":
     chosen_target = st.selectbox('Choose the Target Column', df.columns)
